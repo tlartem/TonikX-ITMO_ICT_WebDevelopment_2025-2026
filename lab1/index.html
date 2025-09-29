@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Лабораторная работа 1 - Отчеты по лабораторным работам - Цырульников Артем</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "\u041b\u0430\u0431\u043e\u0440\u0430\u0442\u043e\u0440\u043d\u0430\u044f \u0440\u0430\u0431\u043e\u0442\u0430 1";
+        var mkdocs_page_input_path = "lab1.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Отчеты по лабораторным работам - Цырульников Артем
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Главная</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Лабораторная работа 1</a>
+    <ul class="current">
+    </ul>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Отчеты по лабораторным работам - Цырульников Артем</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Лабораторная работа 1</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h2 id="python-socket">Лабораторная работа: Сетевые приложения на Python (socket)<a class="headerlink" href="#python-socket" title="Permanent link">&para;</a></h2>
+<p>В этой лабораторной работе я реализовал пять небольших приложений на базе библиотеки <code>socket</code>. Они демонстрируют работу с UDP и TCP, обработку HTTP-запросов, многопользовательский чат с потоками, а также простой веб-сервер для учёта оценок с HTML-шаблоном. Все проекты написаны на Python и запускаются без внешних зависимостей.</p>
+<h2 id="_1">Ход выполнения<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h2 id="1-udp-">Задание 1: UDP-приветствие<a class="headerlink" href="#1-udp-" title="Permanent link">&para;</a></h2>
+<p>Клиент отправляет «Hello, server» и получает от сервера «Hello, client» — обмен через UDP.</p>
+<p><em>Клиент и сервер</em></p>
+<ul>
+<li>Сервер (<code>task1/server.py</code>): слушает <code>0.0.0.0:8001/UDP</code>, принимает датаграммы и отвечает тем же сокетом. Логирует входящие/исходящие сообщения.</li>
+<li>Клиент (<code>task1/client.py</code>): отправляет фразу на <code>localhost:8001</code>, ждёт ответ и печатает его.</li>
+</ul>
+<p><em>Протокол</em></p>
+<ul>
+<li>UDP (<code>socket.SOCK_DGRAM</code>), схема request/response, кодировка UTF‑8.</li>
+</ul>
+<p><em>Запуск</em></p>
+<ul>
+<li>Сервер: <code>python task1/server.py</code></li>
+<li>Клиент: <code>python task1/client.py</code></li>
+</ul>
+<h2 id="2-tcp-">Задание 2: TCP-вычислительный сервис<a class="headerlink" href="#2-tcp-" title="Permanent link">&para;</a></h2>
+<p>Клиент запрашивает выполнение математической операции. Я выбрал вариант «Площадь трапеции»: ( S = \frac{(a + b) \cdot h}{2} ).</p>
+<p><em>Клиент и сервер</em></p>
+<ul>
+<li>Сервер (<code>task2/server.py</code>): TCP на <code>0.0.0.0:8002</code>, принимает JSON с параметрами <code>a</code>, <code>b</code>, <code>h</code>, валидирует и возвращает JSON с полем <code>result</code> либо <code>error</code>.</li>
+<li>Клиент (<code>task2/client.py</code>): подключается к <code>localhost:8002</code>, опрашивает пользователя (безопасный парсинг чисел), отправляет JSON и печатает ответ.</li>
+</ul>
+<p><em>Протокол</em></p>
+<ul>
+<li>TCP (<code>socket.SOCK_STREAM</code>), обмен в формате JSON, кодировка UTF‑8.</li>
+</ul>
+<p><em>Запуск</em></p>
+<ul>
+<li>Сервер: <code>python task2/server.py</code></li>
+<li>Клиент: <code>python task2/client.py</code> (ввести значения <code>a</code>, <code>b</code>, <code>h</code> при запросе)</li>
+</ul>
+<h2 id="3-http-">Задание 3: HTTP-сервер статической страницы<a class="headerlink" href="#3-http-" title="Permanent link">&para;</a></h2>
+<p>Сервер принимает подключение, парсит запрос и отдаёт HTML-страницу из файла <code>index.html</code>.</p>
+<p><em>Сервер</em></p>
+<ul>
+<li>Реализация (<code>task3/server.py</code>): TCP на <code>0.0.0.0:8003</code>, загружает <code>task3/index.html</code>, формирует корректный HTTP-ответ с заголовками <code>Content-Type</code> и <code>Content-Length</code>. В логах фиксируются метод и путь запроса, ошибки конвертируются в страницу 500 с сообщением.</li>
+</ul>
+<p><em>Файл страницы</em></p>
+<ul>
+<li><code>task3/index.html</code>: адаптивный одностраничный макет без внешних зависимостей, стили встроены.</li>
+</ul>
+<p><em>Запуск</em></p>
+<ul>
+<li>Сервер: <code>python task3/server.py</code></li>
+<li>Открыть: <code>http://localhost:8003</code></li>
+</ul>
+<h2 id="4-tcp">Задание 4: Многопользовательский чат (TCP + потоки)<a class="headerlink" href="#4-tcp" title="Permanent link">&para;</a></h2>
+<p>Реализован полноценный многопользовательский чат с широковещательной рассылкой и никнеймами. Для максимального балла использованы потоки.</p>
+<p><em>Сервер</em></p>
+<ul>
+<li><code>task4/server.py</code>: TCP на <code>0.0.0.0:8004</code>, на каждого клиента создаётся поток. Пользователи хранятся в словаре с <code>@dataclass ClientInfo</code>. Сообщения размечаются штампом времени и транслируются всем, кроме отправителя. Корректный выход — по <code>exit</code> или разрыву соединения.</li>
+</ul>
+<p><em>Клиент</em></p>
+<ul>
+<li><code>task4/client.py</code>: два потока — приём и отправка. На старте вводится никнейм, команды отправляются построчно; для выхода — <code>exit</code>.</li>
+</ul>
+<p><em>Запуск</em></p>
+<ul>
+<li>Сервер: <code>python task4/server.py</code></li>
+<li>Клиенты (в разных терминалах): <code>python task4/client.py</code></li>
+</ul>
+<h2 id="5-getpost">Задание 5: Веб-сервер оценок (GET/POST)<a class="headerlink" href="#5-getpost" title="Permanent link">&para;</a></h2>
+<p>Простой HTTP-сервер, который принимает и хранит оценки по дисциплинам и отдаёт HTML-страницу со списком всех оценок.</p>
+<p><em>Сервер</em></p>
+<ul>
+<li><code>task5/server.py</code>: TCP на <code>0.0.0.0:8005</code>. Для <code>GET /</code> генерирует страницу из <code>template.html</code>, подставляя строки таблицы по данным в памяти. Для <code>POST /</code> ожидает JSON-тело с полями <code>subject</code> и <code>grade</code>, валидирует и делает 302-редирект на <code>/</code>.</li>
+</ul>
+<p><em>HTML-шаблон</em></p>
+<ul>
+<li><code>task5/template.html</code>: разметка формы и таблицы с использованием Bootstrap CDN. Табличные строки вставляются в плейсхолдер <code>{grades_rows}</code>.</li>
+</ul>
+<p><em>Особенности и допущения</em></p>
+<ul>
+<li>Хранилище — в памяти процесса (список словарей). Перезапуск очищает данные.</li>
+<li>Для отправки оценок сервер ожидает JSON. Для быстрого теста удобно использовать <code>curl</code>/HTTPie:</li>
+<li><code>curl -i http://localhost:8005/</code></li>
+<li><code>curl -i -X POST http://localhost:8005/ -H 'Content-Type: application/json' -d '{"subject":"Математика","grade":5}'</code></li>
+</ul>
+<p><em>Запуск</em></p>
+<ul>
+<li>Сервер: <code>python task5/server.py</code></li>
+<li>Открыть список: <code>http://localhost:8005</code></li>
+</ul>
+<h2 id="_2">Выводы<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>Собранный набор примеров демонстрирует базовые приёмы работы с <code>socket</code>: датаграммный обмен по UDP, надёжные соединения по TCP, ручную сборку HTTP-ответов, многопоточную обработку клиентов и примитивное серверное рендеринг-шаблона. Код изолирован по заданиям, имеет единообразную структуру, прост в запуске и расширении.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="Главная"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
